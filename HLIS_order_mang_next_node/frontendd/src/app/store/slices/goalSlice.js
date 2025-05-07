@@ -57,6 +57,16 @@ export const getSuggestedHabits = createAsyncThunk('habit/getSuggestedHabits', a
     console.log("response",response)
     return response
 });
+export const getUpcomingReminders = createAsyncThunk('habit/getUpcomingReminders', async (token) => {
+    console.log("here");
+    console.log("token",token)
+    const api_key = "b6e9dd5755936ea772dbd0c652d1efa3";
+    const url = "http://localhost:3000/v1/user/get-all-reminder";
+
+    const response = await secureAxios(url, {}, 'GET', api_key, token);
+    console.log("response",response)
+    return response
+});
 
 export const createHabit = createAsyncThunk('habit/createHabit', async (request_data) => {
     const {token, name,habit_type_id,goal_type,goal_target,reminder_time,message} = request_data;
@@ -98,6 +108,7 @@ const initialState = {
     allLogs:null,
     streaks:null,
     suggestedHabits:null,
+    reminders:null
 
 };
 
@@ -212,6 +223,22 @@ const goalSlice = createSlice({
                 state.error = action.error.message;
                 console.log("error",action.error.message)
             })
+            .addCase(getUpcomingReminders.pending, (state) => {
+                state.loading = true;
+                console.log("loading")
+            })
+            .addCase(getUpcomingReminders.fulfilled, (state, action) => {
+                state.loading = false;
+                state.reminders = action.payload.data;
+                
+                console.log("reminders==",action.payload.data)
+            })
+            .addCase(getUpcomingReminders.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+                console.log("error",action.error.message)
+            })
+
 
 
 

@@ -33,7 +33,7 @@ export default function LoginForm() {
         console.log("Login payload:", result.payload);
         console.log("Login meta:", result.meta.requestStatus);
         if (result.meta.requestStatus === "fulfilled" && result.payload?.code === 200) {
-          router.push("/product"); 
+          router.push("/user"); 
         } else {
           console.error("Login failed:", result.payload?.message);
         }

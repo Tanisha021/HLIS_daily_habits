@@ -20,6 +20,7 @@ const customerRoute = (app) => {
     app.get("/v1/user/get-habit-streaks", User.getHabitStreaks);
     app.get("/v1/user/get-suggested-habits", User.getSuggestedHabits);
     app.get("/v1/user/get-habits-type", User.getHabitTypes);
+    app.get("/v1/user/get-all-reminder", User.getAllReminder);
 
 
     

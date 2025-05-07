@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { getStreaks } from "@/app/store/slices/goalSlice";
+import { logoutUser } from "@/app/store/slices/authSlice";
 
 export default function HabitStreaks() {
   const router = useRouter();
@@ -22,22 +23,48 @@ export default function HabitStreaks() {
     }
   }, [dispatch, router]);
 
+  const handleLogout = async () => {
+    const token = localStorage.getItem("user_token");
+    if (token) {
+      await dispatch(logoutUser(token));
+      router.push("/user/login");
+    }
+  };
+
   return (
     <div className="min-h-screen p-6 bg-gray-50">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto m-2">
         <h1 className="text-2xl font-semibold text-gray-800 mb-4">Habit Streaks</h1>
        
         <button 
           onClick={() => router.push("/user/habits")} 
-          className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+          className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 m-2"
         >
             Move to Dashboard
         </button>
         <button 
           onClick={() => router.push("/user/suggested-habits")} 
-          className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+          className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 m-2"
         >
             Suggested Habit
+        </button>
+        <button 
+          onClick={() => router.push("/user/reminders")} 
+          className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 m-2"
+        >
+            See Upcoming Reminders
+        </button>
+        <button 
+          onClick={() => router.push("/user/calendar")} 
+          className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 m-2"
+        >
+            See Calendar
+        </button>
+        <button
+          onClick={handleLogout} 
+          className="inline-block bg-red-600 text-white px-4 py-2 rounded text-sm m-2"
+        >
+          Logout
         </button>
 
         {loading ? (

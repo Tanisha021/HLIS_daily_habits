@@ -96,10 +96,9 @@ class AdminModel {
         try{
             const user_id = id
             const userQuery = `SELECT hs.habit_id,hs.current_streak,hs.longest_streak,hs.last_completed,h.name,h.goal_type , h.created_at,
-	        hl.date,hl.status,h.name,h.goal_type , h.created_at
+	       h.name,h.goal_type , h.created_at
             FROM tbl_habits h
             INNER JOIN tbl_habit_streaks hs ON hs.habit_id = h.habit_id
-            inner join tbl_habit_logs hl on hl.habit_id = h.habit_id 
             WHERE h.user_id = ?`;
             const [userResult] = await database.query(userQuery, [user_id]);
             const data = userResult.map((row) => {
@@ -111,8 +110,6 @@ class AdminModel {
                     name: row.name,
                     goal_type: row.goal_type,
                     created_at: row.created_at,
-                    date: row.date,
-                    status: row.status
                 };
             });
             if (userResult.length > 0) {

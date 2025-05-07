@@ -278,6 +278,21 @@ class User {
                 });
             }
         }
+        async getAllReminder(req, res) {
+            try{
+             
+            const user_id = req.owner_id;
+            const responseData = await userModel.getAllReminder(user_id);
+            return common.response(res, responseData);
+    
+            }catch(error){
+                console.error("Error in signup:", error);
+                return common.response(res, {
+                    code: response_code.OPERATION_FAILED,
+                    message: t('rest_keywords_something_went_wrong') + error
+                });
+            }
+        }     
 
 
 

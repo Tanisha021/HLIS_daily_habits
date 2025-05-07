@@ -15,7 +15,7 @@ export default function Admin() {
     const token = localStorage.getItem("admin_token");
     console.log("token-frontend", token);
     if (!token) {
-      router.push("/not-found");
+      router.push("/admin/login");
       return;
     }
     dispatch(viewAllUsers(token));
@@ -25,25 +25,6 @@ export default function Admin() {
     <div className="p-6">
       <h1 className="text-3xl font-bold mb-6 text-center">View All Users</h1>
       <div className="flex gap-3 mb-4">
-        {/* <Link
-          href={"/admin"}
-          className="inline-block bg-blue-600 text-white px-3 py-1 rounded text-sm"
-        >
-         
-        </Link>  */}
-        {/* 
-        <Link
-          href={"/user/history"}
-          className="inline-block bg-blue-600 text-white px-3 py-1 rounded text-sm"
-        >
-          View History
-        </Link>
-        <button
-          onClick={handleLogout}
-          className="inline-block bg-red-600 text-white px-3 py-1 rounded text-sm"
-        >
-          Logout
-        </button> */}
       </div>
       
       {loading && <p>Loading...</p>}

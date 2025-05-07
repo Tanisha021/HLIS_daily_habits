@@ -313,5 +313,41 @@ class UserModel {
         }
     }
 
+    async getAllReminder(user_id){
+        try{
+            const selectQuery = `select r.reminder_time ,r.message,h.name,h.goal_type,h.goal_target from tbl_habit_reminders r inner join tbl_habits as h
+                on r.habit_id = h.habit_id where r.user_id = ?`;
+            const [result] = await database.query(selectQuery, [user_id]); 
+           
+            const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const filteredResult = result.filter(item => {
+                const reminderTime = new Date(item.reminder_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                return reminderTime > currentTime;
+            });
+            if(filteredResult.length > 0){
+                return {
+                    code: response_code.SUCCESS,
+                    message: t('reminder_fetched_successfully'),
+                    data: filteredResult
+                };
+            }
+            else{
+                return {
+                    code: response_code.NOT_FOUND,
+                    message: t('no_reminder_found'),
+                    data: null
+                };
+            }
+
+        }catch(error){
+            console.log(error);
+            return {
+                code: response_code.OPERATION_FAILED,
+                message: t('some_error_occurred'),
+                data: error.message
+            }; 
+        }
+    }
+
 }
 module.exports = new UserModel();

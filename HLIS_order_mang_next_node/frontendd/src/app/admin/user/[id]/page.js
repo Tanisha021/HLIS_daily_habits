@@ -71,8 +71,6 @@ export default function UserHabitProgress() {
           <p className="text-green-700">Current Streak: {habit.current_streak}</p>
           <p className="text-blue-700">Longest Streak: {habit.longest_streak}</p>
           <p className="text-gray-600">Last Completed: {new Date(habit.last_completed).toLocaleDateString()}</p>
-          <p className="text-gray-800">Last Log Date: {new Date(habit.date).toLocaleDateString()}</p>
-          <p className="text-gray-800">Status: {habit.status}</p>
         </div>
       ))}
 
